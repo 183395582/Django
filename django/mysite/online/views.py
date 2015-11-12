@@ -1,11 +1,12 @@
 # coding=utf-8
 
 from django.shortcuts import render_to_response,render
-from online.models import User,Menu
+from online.models import Menu
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
 from json import dumps
-from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput, BootstrapUneditableInput
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 # Create your views here.
 
 def login(req):
@@ -14,13 +15,14 @@ def login(req):
         password = req.POST.get('password')
         user = User.objects.filter(username=username, password=password)
         if user:
-            response = HttpResponseRedirect('/online/index/')
+            response = HttpResponseRedirect('/index/')
             response.set_cookie('username',username,3600)
             return response
         return render_to_response("login.html")
     if req.method == 'GET':
         return render_to_response('login.html',{}, context_instance=RequestContext(req))
 
+@login_required(login_url="/login/")
 def index(req):
     menus = Menu.objects.exclude(menu_name = '系统管理').order_by("parent_id")
     if menus:
@@ -37,7 +39,8 @@ def register(req):
         repassword = req.POST.get('repassword')
         if password != repassword:
             return render_to_response('register.html',{'reMsg':''}, context_instance=RequestContext(req))
-        User.objects.create(username= username,password=password);
+        user = User.objects.create_user(username, '', password)
+        user.save()
         return render_to_response('login.html',{}, context_instance=RequestContext(req))
     if req.method == 'GET':
         return render_to_response('register.html',{}, context_instance=RequestContext(req))

@@ -40,8 +40,12 @@
         <a style="font-size: large" class="pull-right" href="../register">新注册账号</a>
       </div>
       <div class="jumbotron">
-        <form class="form-signin" method="post" action=".">
+          {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+          {% endif %}
+        <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
             {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" />
             <input style="margin-bottom: 10px;" type="text" name="username" id="inputEmail" class="form-control" placeholder="请输入账号" required autofocus>
             <input style="margin-bottom: 10px;" type="password" name="password" id="inputPassword" class="form-control" placeholder="请输入密码" required>
             <div style="margin-bottom: 50px;"  class="checkbox" style="margin-top: 20px">
