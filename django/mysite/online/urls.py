@@ -17,10 +17,10 @@ Including another URLconf
 from django.conf.urls import url
 
 urlpatterns = [
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+    url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'index.html'}),
-    url(r'^index/$', 'online.views.index'),
-    url(r'^register/$', 'online.views.register'),
+    url(r'^index$', 'online.views.index'),
+    url(r'^register$', 'online.views.register'),
     url(r'^register_valid$', 'online.views.register_valid'),
     url(r'^gotoPage$', 'online.views.gotoPage'),
 ]

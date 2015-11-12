@@ -39,15 +39,14 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">设置</a></li>
-            <li><a href="#">Profile</a></li>
-              {% if user == null %}
-                  <li><a href="../login/">登录</a></li>
-              {% endif %}
-              {% if user != null %}
-                  <li><a href="../logout/">注销</a></li>
-              {% endif %}
+            {% if user.is_authenticated %}
+                <li><a href="#">欢迎您：{{user.username}}</a></li>
+                <li><a href="../logout/">注销</a></li>
+            {% else %}
+                <li><a href="/account/login">登录</a></li>
+                <li><a href="/account/register">注册</a></li>
+            {% endif %}
+            <li><a href="#"></a></li>
           </ul>
         </div>
       </div>

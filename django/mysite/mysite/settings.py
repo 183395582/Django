@@ -123,5 +123,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    'd:/PycharmProjects/django/mysite/static/',
+    'f:/PycharmProjects/django/mysite/static/',
 )

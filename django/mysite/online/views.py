@@ -9,20 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 # Create your views here.
 
-def login(req):
-    if req.method == 'POST':
-        username = req.POST.get('username')
-        password = req.POST.get('password')
-        user = User.objects.filter(username=username, password=password)
-        if user:
-            response = HttpResponseRedirect('/index/')
-            response.set_cookie('username',username,3600)
-            return response
-        return render_to_response("login.html")
-    if req.method == 'GET':
-        return render_to_response('login.html',{}, context_instance=RequestContext(req))
-
-@login_required(login_url="/login/")
+@login_required(login_url="/login")
 def index(req):
     menus = Menu.objects.exclude(menu_name = '系统管理').order_by("parent_id")
     if menus:
@@ -42,7 +29,7 @@ def register(req):
         user = User.objects.create_user(username, '', password)
         user.save()
         return render_to_response('login.html',{}, context_instance=RequestContext(req))
-    if req.method == 'GET':
+    else:
         return render_to_response('register.html',{}, context_instance=RequestContext(req))
 
 def register_valid(req):
