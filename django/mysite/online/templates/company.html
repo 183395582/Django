@@ -33,21 +33,24 @@
         <div style="margin-top: -90px;">
           <h4 class="page-header">货运维修列表</h4>
           <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <label>企业名称：</label><input style="margin-bottom: 10px;" type="text" name="username" id="inputEmail" class="form-control" placeholder="请输入账号" required autofocus>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
+              <form class="form-horizontal" role="form">
+                  <div class="container-row-span">
+                    <label for="companyName" class="col-sm-1 control-label">企业名称：</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" id="companyName">
+                    </div>
+                  </div>
+                  <div class="container-row-span">
+                    <label for="companyName1" class="col-sm-2 control-label">企业类型：</label>
+                    <div class="col-sm-2">
+                           <select class="form-control">
+                             <option>货运</option>
+                             <option>客运</option>
+                             <option>维修</option>
+                          </select>
+                    </div>
+                  </div>
+              </form>
           </div>
 
           <h2 class="sub-header">Section title</h2>
