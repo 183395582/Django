@@ -1,20 +1,37 @@
 # coding=utf-8
 
 from django.shortcuts import render_to_response,render
-from online.models import Menu
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
 from json import dumps
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import auth
+import models
 # Create your views here.
 
-@login_required(login_url="/login")
+def login(req):
+    if req.method == 'POST':
+        username = req.POST.get('username')
+        password = req.POST.get('password')
+        user = auth.authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            auth.login(req, user)
+            return HttpResponseRedirect('/index/')
+        else:
+            return render_to_response("login.html",{'errors':'true'}, context_instance=RequestContext(req))
+    if req.method == 'GET':
+        #如果已经登录，则直接跳转至主页
+        if req.user.is_authenticated():
+            return HttpResponseRedirect('/index/')
+        return render_to_response('login.html',{}, context_instance=RequestContext(req))
+
+@login_required(login_url="/login/")
 def index(req):
-    menus = Menu.objects.exclude(menu_name = '系统管理').order_by("parent_id")
+    menus = models.Menu.objects.exclude(menu_name = '系统管理').order_by("parent_id")
     if menus:
         for item in menus:
-            menu = Menu.objects.filter(parent_id = item.id).order_by("parent_id")
+            menu = models.Menu.objects.filter(parent_id = item.id).order_by("parent_id")
             item.sub_menu = menu
     username = req.COOKIES.get('username','')
     return render(req, 'index.html',locals())
@@ -29,7 +46,7 @@ def register(req):
         user = User.objects.create_user(username, '', password)
         user.save()
         return render_to_response('login.html',{}, context_instance=RequestContext(req))
-    else:
+    if req.method == 'GET':
         return render_to_response('register.html',{}, context_instance=RequestContext(req))
 
 def register_valid(req):
