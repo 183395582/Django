@@ -43,7 +43,7 @@
           {% if form.errors %}
             <p>Your username and password didn't match. Please try again.</p>
           {% endif %}
-        <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        <form class="form-signin" method="post" action=".">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}" />
             <input style="margin-bottom: 10px;" type="text" name="username" id="inputEmail" class="form-control" placeholder="请输入账号" required autofocus>
