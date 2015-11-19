@@ -20,3 +20,21 @@ class Menu(models.Model):
     menu_type = models.IntegerField()
     def __unicode__(self):
         return self.menu_name
+
+class Teacher(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=50, blank=False)
+    gender = models.CharField(max_length=1, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    birthday = models.DateField(blank=True, null=True)
+    seniority = models.IntegerField(blank=True, null=True)
+    education = models.CharField(max_length=50, blank=True)
+    phone = models.CharField(max_length=11, blank=True)
+    email = models.CharField(max_length=50, blank=True)
+    university = models.CharField(max_length=50, blank=True)
+    entryDate = models.DateField(db_column='entryDate', blank=True, null=True) #Field name made lowercase.
+    status = models.CharField(max_length=1, blank=False)
+    mark = models.CharField(max_length=500, blank=True)
+    class Meta:
+        managed = False
+        db_table = 'teacher'
